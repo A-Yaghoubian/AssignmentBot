@@ -20,6 +20,7 @@ def hadsAdad(message):
             break
 
 bot = telebot.TeleBot("2019327355:AAF9JCQPiBsOQKrEivcNfGlAoFk5nWKQ0jc")
+# bot = telebot.TeleBot('https://thawing-meadow-17131.herokuapp.com/' + "2019327355:AAF9JCQPiBsOQKrEivcNfGlAoFk5nWKQ0jc")
 
 @bot.message_handler(['Start', 'start', 'شروع'])
 def wellcome(message):
