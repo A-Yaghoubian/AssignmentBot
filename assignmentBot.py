@@ -1,7 +1,10 @@
 import random
+import os
+
 import telebot
 
-bot = telebot.TeleBot("2019327355:AAF9JCQPiBsOQKrEivcNfGlAoFk5nWKQ0jc")
+TOKEN = os.environ["TOKEN"]
+bot = telebot.TeleBot(TOKEN)
 markUp = telebot.types.ReplyKeyboardMarkup(row_width=3)
 button_1 = telebot.types.KeyboardButton('موسیقی')
 button_2 = telebot.types.KeyboardButton('ویدیو')
