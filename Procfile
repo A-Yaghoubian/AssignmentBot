@@ -1,1 +1,1 @@
-web: python3 ./assignmentBot.py
+app: python3 ./assignmentBot.py
