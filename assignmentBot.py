@@ -1,6 +1,7 @@
-from enum import Flag
 import random
 import telebot
+
+print('Aliii')
 
 def hadsAdad(message):
     answer_number = random.randint(0, 1000)
@@ -22,10 +23,13 @@ def hadsAdad(message):
 bot = telebot.TeleBot("2019327355:AAF9JCQPiBsOQKrEivcNfGlAoFk5nWKQ0jc")
 # bot = telebot.TeleBot('https://thawing-meadow-17131.herokuapp.com/' + "2019327355:AAF9JCQPiBsOQKrEivcNfGlAoFk5nWKQ0jc")
 
+print('Aliii')
+
 @bot.message_handler(['Start', 'start', 'شروع'])
 def wellcome(message):
     first_name = message.from_user.first_name
     bot.reply_to(message, f'{first_name} خوش اومدی')
+    print('Aliii')
 
 @bot.message_handler(['Game', 'game', 'بازی'])
 def play_game(message):
