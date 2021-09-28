@@ -17,16 +17,17 @@ def play_game(message):
 game_flag = 1
     
 if game_flag == 1:
-    @bot.message_handler(func=lambda message: True)
-    def check_game(message):
-        while True:
+    while True:
+        @bot.message_handler(func=lambda message: True)
+        def check_game(message):
             if int(message.text) > game_answer_number:
                 bot.send_message(message.chat.id, 'کمترش کن')
             elif int(message.text) < game_answer_number:
                 bot.send_message(message.chat.id, 'بیشترش کن')
             elif int(message.text) == game_answer_number:
                 bot.send_message(message.chat.id, 'ماشالااااا خودشه\nپیداش کردی')
-                break
-    game_flag = 0
+                game_flag = 0
+        if game_flag == 0:
+            break
     
 bot.polling()
