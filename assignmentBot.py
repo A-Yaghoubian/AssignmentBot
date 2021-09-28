@@ -14,7 +14,7 @@ def wellcome(message):
 def play_game(message):
     bot.reply_to(message, 'بازی حدس عدد')
     bot.send_message(message.chat.id, 'یک عدد بین ۰ تا ۱۰۰۰ بگو')
-    game_flag = 1
+game_flag = 1
     
 if game_flag == 1:
     @bot.message_handler(func=lambda message: True)
@@ -27,6 +27,6 @@ if game_flag == 1:
             elif int(message.text) == game_answer_number:
                 bot.send_message(message.chat.id, 'ماشالااااا خودشه\nپیداش کردی')
                 break
-        game_flag = 0
+    game_flag = 0
     
 bot.polling()
