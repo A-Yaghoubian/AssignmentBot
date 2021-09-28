@@ -13,6 +13,7 @@ def wellcome(message):
 def play_game(message):
     bot.reply_to(message, 'بازی حدس عدد')
     bot.send_message(message.chat.id, 'یک عدد بین ۰ تا ۱۰۰۰ بگو')
+    loop_game()
 
 def loop_game():
     @bot.message_handler(func=lambda message: True)
