@@ -14,14 +14,15 @@ def play_game(message):
     bot.reply_to(message, 'بازی حدس عدد')
     bot.send_message(message.chat.id, 'یک عدد بین ۰ تا ۱۰۰۰ بگو')
 
-while True:
-    @bot.message_handler(func=lambda message: True)
-    def check_game(message):
-        if int(message.text) > game_answer_number:
-            bot.send_message(message.chat.id, 'کمترش کن')
-        elif int(message.text) < game_answer_number:
-            bot.send_message(message.chat.id, 'بیشترش کن')
-        elif int(message.text) == game_answer_number:
-            bot.send_message(message.chat.id, 'ماشالااااا خودشه\nپیداش کردی')
+@bot.message_handler(func=lambda message: True)
+def check_game(message):
+    if int(message.text) > game_answer_number:
+        bot.send_message(message.chat.id, 'کمترش کن')
+        check_game(message)
+    elif int(message.text) < game_answer_number:
+        bot.send_message(message.chat.id, 'بیشترش کن')
+        check_game(message)
+    elif int(message.text) == game_answer_number:
+        bot.send_message(message.chat.id, 'ماشالااااا خودشه\nپیداش کردی')
                 
 bot.polling()
