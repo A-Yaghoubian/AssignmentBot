@@ -2,6 +2,7 @@ import random
 import telebot
 
 bot = telebot.TeleBot("2019327355:AAF9JCQPiBsOQKrEivcNfGlAoFk5nWKQ0jc")
+game_flag = 1
 game_answer_number = random.randint(0, 1000)
 
 @bot.message_handler(commands=['Start', 'start', 'شروع'])
