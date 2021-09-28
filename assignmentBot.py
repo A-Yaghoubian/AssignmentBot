@@ -26,5 +26,6 @@ def game(answer_number):
                 loop_game()
             elif int(message.text) == answer_number:
                 bot.send_message(message.chat.id, 'ماشالااااا خودشه\nپیداش کردی')
+    loop_game()
                     
 bot.polling()
