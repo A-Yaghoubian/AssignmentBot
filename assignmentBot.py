@@ -12,7 +12,9 @@ def wellcome(message):
 def play_game(message):
     bot.reply_to(message, 'بازی حدس عدد')
     bot.send_message(message.chat.id, 'یک عدد بین ۰ تا ۱۰۰۰ بگو')
-    game(random.randint(0, 1000))
+    a = random.randint(0, 1000)
+    print(a)
+    game(a)
 
 def game(answer_number):
     def loop_game():
