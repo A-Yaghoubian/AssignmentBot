@@ -2,7 +2,6 @@ import random
 import telebot
 
 bot = telebot.TeleBot("2019327355:AAF9JCQPiBsOQKrEivcNfGlAoFk5nWKQ0jc")
-game_flag = 0
 game_answer_number = random.randint(0, 1000)
 
 @bot.message_handler(commands=['Start', 'start', 'شروع'])
@@ -33,6 +32,5 @@ if game_flag == 1:
                 global game_flag
                 game_flag = 0
                 break
-
-print('3')                
+                
 bot.polling()
