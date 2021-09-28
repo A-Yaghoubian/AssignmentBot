@@ -12,18 +12,19 @@ def wellcome(message):
 def play_game(message):
     bot.reply_to(message, 'بازی حدس عدد')
     bot.send_message(message.chat.id, 'یک عدد بین ۰ تا ۱۰۰۰ بگو')
-    loop_game(random.randint(0, 1000))
+    game(random.randint(0, 1000))
 
-def loop_game(answer_number):
-    @bot.message_handler(func=lambda message: True)
-    def check_game(message):
-        if int(message.text) > answer_number:
-            bot.send_message(message.chat.id, 'کمترش کن')
-            loop_game()
-        elif int(message.text) < answer_number:
-            bot.send_message(message.chat.id, 'بیشترش کن')
-            loop_game()
-        elif int(message.text) == answer_number:
-            bot.send_message(message.chat.id, 'ماشالااااا خودشه\nپیداش کردی')
-                
+def game(answer_number):
+    def loop_game():
+        @bot.message_handler(func=lambda message: True)
+        def check_game(message):
+            if int(message.text) > answer_number:
+                bot.send_message(message.chat.id, 'کمترش کن')
+                loop_game()
+            elif int(message.text) < answer_number:
+                bot.send_message(message.chat.id, 'بیشترش کن')
+                loop_game()
+            elif int(message.text) == answer_number:
+                bot.send_message(message.chat.id, 'ماشالااااا خودشه\nپیداش کردی')
+                    
 bot.polling()
