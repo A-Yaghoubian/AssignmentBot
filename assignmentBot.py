@@ -16,10 +16,13 @@ def play_game(message):
     bot.send_message(message.chat.id, 'یک عدد بین ۰ تا ۱۰۰۰ بگو')
     global game_flag
     game_flag = 1
+    print('0')
     
 if game_flag == 1:
+    print('1')
     @bot.message_handler(func=lambda message: True)
     def check_game(message):
+        print('2')
         while True:
             if int(message.text) > game_answer_number:
                 bot.send_message(message.chat.id, 'کمترش کن')
@@ -30,5 +33,6 @@ if game_flag == 1:
                 global game_flag
                 game_flag = 0
                 break
-    
+
+print('3')                
 bot.polling()
