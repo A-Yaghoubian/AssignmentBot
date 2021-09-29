@@ -1,3 +1,4 @@
 pyTelegramBotAPI
+qrcode[pil]
 khayyam
 gTTS
