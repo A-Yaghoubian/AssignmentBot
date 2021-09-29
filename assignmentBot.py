@@ -12,6 +12,87 @@ bot = telebot.TeleBot(TOKEN)
 def wellcome(message):
     first_name = message.from_user.first_name
     bot.reply_to(message, f'Hey {first_name}, Welcome 😃')
+
+@bot.message_handler(commands=['Game', 'game'])
+def play_game(message):
+    bot.reply_to(message, 'Guess the number 🎯')
+    msg = bot.send_message(message.chat.id, 'Tell me a number between 0 and 1000 ...')
+    bot.register_next_step_handler(msg, game)
+
+def game(msg):
+    ANSWER_NUMBER = random.randint(0, 1000)
+    def game_works(message):
+        markUp = telebot.types.ReplyKeyboardMarkup(row_width=1)
+        button_1 = telebot.types.KeyboardButton('New Game ? 🤔')
+        markUp.add(button_1)
+        try:
+            if int(message.text) > ANSWER_NUMBER:
+                msg = bot.send_message(message.chat.id, 'Come DOWN :D', reply_markup=markUp)
+                bot.register_next_step_handler(msg, game_works)
+            elif int(message.text) < ANSWER_NUMBER:
+                msg = bot.send_message(message.chat.id, 'Go UP :D', reply_markup=markUp)
+                bot.register_next_step_handler(msg, game_works)
+            elif int(message.text) == ANSWER_NUMBER:
+                msg = bot.send_message(message.chat.id, "That's Right 😍\nGood job buddy 👊", reply_markup=telebot.types.ReplyKeyboardRemove(selective=True))
+            elif message.text == 'New Game ? 🤔':
+                print('1')
+                bot.send_message(message.chat.id, 'Guess the number 🎯 \nTell me a number between 0 and 1000 ...', reply_markup=telebot.types.ReplyKeyboardRemove(selective=True))
+                bot.register_next_step_handler_by_chat_id(message.chat.id, game)
+        except:
+            bot.reply_to(message, 'Did something happen? 😟\nLeave the game to check the rest of your needs.', reply_markup=telebot.types.ReplyKeyboardRemove(selective=True))
+    game_works(msg)    
+    
+@bot.message_handler(commands=['Age', 'age'])
+def calculate_age(message):
+    msg = bot.send_message(message.chat.id, 'Please tell me your date of birth (Jalali-Shamsi)\n📌Example: 27/4/1379')
+    bot.register_next_step_handler(msg, age_works)
+    
+def age_works(message):
+    slash_counter = 0
+    for letter in message.text:
+        if letter == '/':
+            slash_counter += 1
+            
+    if slash_counter == 2:
+        input_text = message.text
+        input_list = input_text.split('/')
+        try:
+            difference = JalaliDatetime.now() - JalaliDatetime(input_list[2], input_list[1], input_list[0])
+            
+            if ',' not in str(difference):
+                y = 0
+                m = 0
+                d = 0
+            else:
+                difference = int(((str(difference)).split(' '))[0])
+                y = difference // 365
+                difference %= 365
+                m = difference // 30
+                difference %= 30
+                d = difference
+            
+            if y < 0:
+                bot.send_message(message.chat.id, 'Wrong input!')
+            elif y != 0 and m == 0 and d == 0: # y
+                bot.send_message(message.chat.id, f'HAPPY BIRTHDAY 🎈🎂\nYou are {y} years old 😍')
+            elif y != 0 and m != 0 and d == 0: # y m 
+                bot.send_message(message.chat.id, f'You are {y} years and {m} months old :)\nBe healthy ❤')
+            elif y != 0 and m == 0 and d != 0: # y d
+                bot.send_message(message.chat.id, f'You are {y} years and {d} days old :)\nBe healthy ❤')
+            elif y != 0 and m != 0 and d != 0: # y m d
+                bot.send_message(message.chat.id, f'You are {y} years, {m} months and {d} days old :)\nBe healthy ❤')
+            elif y == 0 and m != 0 and d == 0: # m
+                bot.send_message(message.chat.id, f'You are {m} months old :)\nBe healthy 🤍')
+            elif y == 0 and m != 0 and d != 0: # m d
+                bot.send_message(message.chat.id, f'You are {m} months and {d} days old :)\nBe healthy 🤍')
+            elif y == 0 and m == 0 and d != 0: # d
+                bot.send_message(message.chat.id, f'You are {d} days old :)\nBe healthy 🤍')    
+            elif y == 0 and m == 0 and d == 0: # 
+                bot.send_message(message.chat.id, 'Welcome to this world, my dear 🎊👶')
+        except:
+            bot.send_message(message.chat.id, 'Wrong input!')
+    else:
+        bot.send_message(message.chat.id, 'Wrong input!')    
     
 @bot.message_handler(commands=['Voice', 'voice'])
 def voice_producer(message):
