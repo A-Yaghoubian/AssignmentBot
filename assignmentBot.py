@@ -1,7 +1,7 @@
 import random
 import telebot
-from datetime import date, datetime
-from khayyam import JalaliDate, JalaliDatetime
+from khayyam import JalaliDatetime
+from gtts import gTTS
 
 bot = telebot.TeleBot("2019327355:AAF9JCQPiBsOQKrEivcNfGlAoFk5nWKQ0jc")
 
@@ -19,7 +19,7 @@ def play_game(message):
 def game(answer_number):
     def loop_game():
         @bot.message_handler(func=lambda message: True)
-        def check_game(message):
+        def game_works(message):
             if int(message.text) > answer_number:
                 bot.send_message(message.chat.id, 'کمترش کن')
                 loop_game()
@@ -32,7 +32,7 @@ def game(answer_number):
     
 @bot.message_handler(commands=['Age', 'age', 'سن'])
 def calculate_age(message):
-    msg = bot.send_message(message.chat.id, 'Example: 27/4/1379')
+    bot.send_message(message.chat.id, 'Example: 27/4/1379')
     age()
 
 def age():
@@ -55,5 +55,19 @@ def age():
             bot.send_message(message.chat.id, f'You are {y} years, {m} months and {d} days old :)')
         else:
             bot.send_message(message.chat.id, 'Wrong input!')
-                
+            
+@bot.message_handler(commands=['voice'])
+def voice_producer(message):
+    bot.reply_to(message, 'Enter your message')
+    voice()
+    
+def voice():
+    @bot.message_handler(func=lambda message: True)
+    def voice_works(message):
+        message_text = message.text
+        language = 'en'        
+        message_voice = gTTS(text=message_text, lang=language, slow=False)
+        bot.send_voice(message.chat.id, message_voice)
+        bot.send_voice(message.chat.id, "FILEID")
+                    
 bot.polling()
