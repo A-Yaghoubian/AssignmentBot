@@ -42,5 +42,10 @@ def arg_works(message):
         bot.send_message(message.chat.id, f'The largest number: {answer_1}\nIts index: {answer_2}')
     except:
         bot.send_message(message.chat.id, "WARNING ⚠\nDo you just enter numbers and ','? 🤔\nPlease try again")
+        
+@bot.message_handler(commands=['help', 'Help', 'HELP'])
+def help(message):
+    Description = '1️⃣ /start : start and welcome\n 2️⃣ /game : Play game\n 3️⃣ /age : Your age\n 4️⃣ /voice : text to voice\n 5️⃣ /max : maximum in list\n 6️⃣ /argmax : highest number argument in list\n 7️⃣ /qrcode : product QR code\n\nAli Yaghoubian 👨‍💻\nSupport: @Alijackoub'
+    bot.send_message(message.chat.id, Description)        
 
 bot.polling()
