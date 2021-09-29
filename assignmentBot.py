@@ -30,31 +30,31 @@ def game(answer_number):
                 bot.send_message(message.chat.id, 'ماشالااااا خودشه\nپیداش کردی')
     loop_game()
     
-@bot.message_handler(commands=['Age', 'age', 'سن'])
-def calculate_age(message):
-    bot.send_message(message.chat.id, 'Example: 27/4/1379')
-    age()
+# @bot.message_handler(commands=['Age', 'age', 'سن'])
+# def calculate_age(message):
+#     bot.send_message(message.chat.id, 'Example: 27/4/1379')
+#     age()
 
-def age():
-    @bot.message_handler(func=lambda message: True)
-    def age_works(message):
-        slash_counter = 0
-        for letter in message.text:
-            if letter == '/':
-                slash_counter += 1
-        if slash_counter == 2:
-            input_text = message.text
-            input_list = input_text.split('/')
-            difference = JalaliDatetime.now() - JalaliDatetime(input_list[2], input_list[1], input_list[0])
-            difference = int(((str(difference)).split(' '))[0])
-            y = difference // 365
-            difference %= 365
-            m = difference // 30
-            difference %= 30
-            d = difference
-            bot.send_message(message.chat.id, f'You are {y} years, {m} months and {d} days old :)')
-        else:
-            bot.send_message(message.chat.id, 'Wrong input!')
+# def age():
+#     @bot.message_handler(func=lambda message: True)
+#     def age_works(message):
+#         slash_counter = 0
+#         for letter in message.text:
+#             if letter == '/':
+#                 slash_counter += 1
+#         if slash_counter == 2:
+#             input_text = message.text
+#             input_list = input_text.split('/')
+#             difference = JalaliDatetime.now() - JalaliDatetime(input_list[2], input_list[1], input_list[0])
+#             difference = int(((str(difference)).split(' '))[0])
+#             y = difference // 365
+#             difference %= 365
+#             m = difference // 30
+#             difference %= 30
+#             d = difference
+#             bot.send_message(message.chat.id, f'You are {y} years, {m} months and {d} days old :)')
+#         else:
+#             bot.send_message(message.chat.id, 'Wrong input!')
             
 @bot.message_handler(commands=['voice'])
 def voice_producer(message):
