@@ -1,5 +1,7 @@
 import random
 import telebot
+from datetime import date, datetime
+from khayyam import JalaliDate, JalaliDatetime
 
 bot = telebot.TeleBot("2019327355:AAF9JCQPiBsOQKrEivcNfGlAoFk5nWKQ0jc")
 
@@ -12,9 +14,7 @@ def wellcome(message):
 def play_game(message):
     bot.reply_to(message, 'بازی حدس عدد')
     bot.send_message(message.chat.id, 'یک عدد بین ۰ تا ۱۰۰۰ بگو')
-    a = random.randint(0, 1000)
-    print(a)
-    game(a)
+    game(random.randint(0, 1000))
 
 def game(answer_number):
     def loop_game():
@@ -29,5 +29,31 @@ def game(answer_number):
             elif int(message.text) == answer_number:
                 bot.send_message(message.chat.id, 'ماشالااااا خودشه\nپیداش کردی')
     loop_game()
-                    
+    
+@bot.message_handler(commands=['Age', 'age', 'سن'])
+def calculate_age(message):
+    msg = bot.send_message(message.chat.id, 'Example: 27/4/1379')
+    age()
+
+def age():
+    @bot.message_handler(func=lambda message: True)
+    def age_works(message):
+        slash_counter = 0
+        for letter in message.text:
+            if letter == '/':
+                slash_counter += 1
+        if slash_counter == 2:
+            input_text = message.text
+            input_list = input_text.split('/')
+            difference = JalaliDatetime.now() - JalaliDatetime(input_list[2], input_list[1], input_list[0])
+            difference = int(((str(difference)).split(' '))[0])
+            y = difference // 365
+            difference %= 365
+            m = difference // 30
+            difference %= 30
+            d = difference
+            bot.send_message(message.chat.id, f'You are {y} years, {m} months and {d} days old :)')
+        else:
+            bot.send_message(message.chat.id, 'Wrong input!')
+                
 bot.polling()
